@@ -10,6 +10,7 @@ import Trips from './pages/Trips';
 import Friends from './pages/Friends';
 import Manage from './pages/Manage';
 import Inbox from './pages/Inbox';
+import Trip from './pages/Trip'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/friends" element={<Friends/>} />
           <Route path="/inbox" element={<Inbox/>} />
           <Route path="/manage" element={<Manage/>} />
+          <Route path="/transactions/trip/:id" element={<Trip/>} />
         </Route>
       </Routes>
     </>

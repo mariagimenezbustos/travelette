@@ -95,10 +95,13 @@ router.get('/trip/:id', async (req, res) => {
 
   try {
     const tripResults = await db(`SELECT * FROM trips WHERE id = ${id};`);
-    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id WHERE trips.id = ${id}`);
+    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id WHERE trips.id = ${id};`);
 
     const trip = tripResults.data[0];
+    console.log("trip destination:", trip.destination);
     const transaction = transactionResults.data;
+    console.log("transaction[0].destination:", transaction[0].destination);
+
 
     res.send({ trip, transaction });
   } catch (error) {
