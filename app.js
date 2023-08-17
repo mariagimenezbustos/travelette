@@ -7,6 +7,7 @@ const cors = require('cors');
 const transactionsRouter = require('./routes/transactions');
 const usersRouter = require('./routes/users');
 const categoriesRouter = require('./routes/categories');
+const tripsRouter = require('./routes/trips');
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use(cors());
 app.use('/api/transactions', transactionsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/trips', tripsRouter);
 
 module.exports = app;

@@ -6,7 +6,7 @@ const db = require("../model/helper");
 
 //returns all the transactions in ascending order
 const getAllTransaction = (req, res) => {
-  db("SELECT * FROM transactions ORDER BY date ASC;")
+  db("SELECT transactions.*, categories.name FROM transactions LEFT JOIN categories ON transactions.category_id = categories.id ORDER BY date ASC;")
     .then(results => {
       res.send(results.data);
     })
@@ -84,6 +84,23 @@ router.get('/user/:firstname', async (req, res) => {
     const transaction = transactionResults.data;
 
     res.send({ user, transaction });
+  } catch (error) {
+    res.status(500).send({ err: err.message });
+  }
+});
+
+/* GET transactions by trip */
+router.get('/trip/:id', async (req, res) => {
+  const {id} = req.params;
+
+  try {
+    const tripResults = await db(`SELECT * FROM trips WHERE id = ${id};`);
+    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id WHERE trips.id = ${id}`);
+
+    const trip = tripResults.data[0];
+    const transaction = transactionResults.data;
+
+    res.send({ trip, transaction });
   } catch (error) {
     res.status(500).send({ err: err.message });
   }

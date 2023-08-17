@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require("../model/helper");
 
 /* GET categories listing. */
@@ -12,7 +12,7 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-/* GET categories listing. */
+/* GET categories by category name. */
 router.get('/:name', async function(req, res) {
   const {name} = req.params;
   try {
