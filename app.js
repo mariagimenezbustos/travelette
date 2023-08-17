@@ -19,7 +19,7 @@ app.use(cors());
 
 
 
-app.use('/api/transactions/', transactionsRouter);
+app.use('/api/transactions', transactionsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
 
