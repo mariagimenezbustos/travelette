@@ -39,7 +39,7 @@ export default function Trip() {
 				<div><a href="#"></a>PAYER</div>
 			</div>
 			<ul className="tripContent">
-					{trip.transaction.map(entry => (
+					{trip.map(entry => (
 						<li key={entry.id}>
 							<Link className="tripRow" to={`/transactions/${entry.id}`}>
 								<div>{entry.date.split("T")[0]} </div>
