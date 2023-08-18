@@ -16,7 +16,7 @@ CREATE TABLE transactions(
     `category_id` INT UNSIGNED NOT NULL,
     `merchant` VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
-    `amount` INT NOT NULL,
+    `amount` DECIMAL(6,2) NOT NULL,
     `currency` VARCHAR(255) NOT NULL,
     `user_id` INT UNSIGNED NOT NULL,
     `trip_id` INT UNSIGNED NOT NULL

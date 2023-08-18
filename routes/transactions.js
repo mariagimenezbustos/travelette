@@ -95,7 +95,7 @@ router.get('/trip/:id', async (req, res) => {
 
   try {
     const tripResults = await db(`SELECT * FROM trips WHERE id = ${id};`);
-    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id WHERE trips.id = ${id};`);
+    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id JOIN users ON transactions.user_id = users.id JOIN categories ON transactions.category_id = categories.id WHERE trips.id = ${id} ORDER BY date ASC;`);
     // add also userResults and categoryResults
 
     const trip = tripResults.data[0];

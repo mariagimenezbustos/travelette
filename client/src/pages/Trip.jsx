@@ -21,13 +21,9 @@ export default function Trip() {
 		});
 	};
 
-
-
 	return (
 	<section className="tripPage wrapper">
-		<h2>Trip Details: 
-			{/* {trip.destination} this needs to get fixed */}
-		</h2>
+		<h2>Trip Details</h2>
 
 		<section className="tripList">
 			<div className="tripHeader">
@@ -42,11 +38,12 @@ export default function Trip() {
 					{trip.map(entry => (
 						<li key={entry.id}>
 							<Link className="tripRow" to={`/transactions/${entry.id}`}>
-								<div>{entry.date.split("T")[0]} </div>
-								<div>{entry.merchant} </div>
-								<div>{entry.name} </div>
-								<div>{entry.amount} </div>
-								<div>{entry.currency} </div>
+								<div>{entry.date.split("T")[0]}</div>
+								<div>{entry.merchant}</div>
+								<div>{entry.name}</div>
+								<div>{entry.amount.toFixed(2)}
+								</div>
+								<div>{entry.currency}</div>
 								<div>{entry.firstname} {entry.lastname}</div>
 							</Link>
 						</li>
