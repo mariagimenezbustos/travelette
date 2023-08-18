@@ -60,7 +60,7 @@ export default function Transactions() {
 								<div>{entry.date.split("T")[0]} </div>
 								<div>{entry.merchant} </div>
 								<div>{entry.name} </div>
-								<div>{entry.amount} </div>
+								<div>{entry.amount.toFixed(2)} </div>
 								<div>{entry.currency} </div>
 							</Link>
 						</li>

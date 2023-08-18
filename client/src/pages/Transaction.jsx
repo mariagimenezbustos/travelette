@@ -25,9 +25,9 @@ export default function Transaction() {
 			<h2>Transaction Details</h2>
 		</header>
 		<div>
-			<p>Category: {transaction.category} -
+			<p>Category: {transaction.name} - {/* this needs to get displayed */}
 				Merchant: {transaction.merchant} -
-				Amount: {transaction.amount} -
+				Amount: {transaction.amount} - {/* this needs to show two decimals */}
 				Currency: {transaction.currency} -
 				Details: {transaction.description}
 			</p>

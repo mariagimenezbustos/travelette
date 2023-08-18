@@ -35,9 +35,10 @@ nav > ul > li> a:hover {
 }
 
 nav {
-  max-height: 100vh;
+  height: 100%;
   top: 0;
   left: 0;
+  bottom: 0;
   background-color: var(--main-purple);
 }
 nav > ul {
@@ -240,7 +241,6 @@ button {
   justify-self: center;
 }
 
-
 .tripContent {
   text-align: center;
   border-bottom-right-radius: 8px;
@@ -254,4 +254,26 @@ button {
 .tripRow:hover{
   background-color: #D7C1FF;
   border-radius: 15px;
+}
+
+.currency-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 40vw);
+}
+
+.currency-grid ul{
+  list-style: none;
+  margin-left: 10px;
+}
+
+.currency-grid h6{
+  font-size: medium;
+  /* margin-bottom: 10px; */
+  margin-left: 10px;
+}
+
+.currency-grid h5{
+  margin-top: 10px;
+  font-size: larger;
+  margin-left: 10px;
 }
