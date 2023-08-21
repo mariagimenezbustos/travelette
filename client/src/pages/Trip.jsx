@@ -16,7 +16,10 @@ export default function Trip() {
 	}, [id]);
 
 	const getTrip = () => {
-		fetch(`/api/transactions/trip/${id}`)
+		fetch(`/api/transactions/trip/${id}`, 
+		{headers: {
+		authorization: "Bearer " + localStorage.getItem("token"),
+		  }})
 			.then(response => response.json())
 			.then(trip => {
 				console.log(trip);
@@ -28,7 +31,10 @@ export default function Trip() {
 	};
 
 	const displayCurrency = () => {
-		fetch(`/api/transactions/trip/${id}`)
+		fetch(`/api/transactions/trip/${id}`, 
+		{headers: {
+		authorization: "Bearer " + localStorage.getItem("token"),
+		  }})
 			.then(response => response.json())
 			.then(transactionsByCurrency => {
 				const displayData = {};

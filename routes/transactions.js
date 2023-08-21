@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../model/helper");
+var userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 
 //helper functions
 
@@ -13,7 +14,7 @@ const getAllTransaction = (req, res) => {
     .catch(err => res.status(500).send(err));
 };
 
-//returns a transaction based on the key you are serching for, eg /transactions/categorys
+//returns a transaction based on the key you are serching for, eg /transactions/categories
 const selectTransactionByKey = (req, res, key, value) => {
   db(`SELECT * FROM transactions WHERE ${key} = "${value}";`)
     .then(results => {
@@ -25,7 +26,7 @@ const selectTransactionByKey = (req, res, key, value) => {
 //CRUD
 
 /* POST - Create a new transaction */
-router.post("/", async function(req, res, next) {
+router.post("/", userShouldBeLoggedIn, async function(req, res) {
   const {date, category, merchant, description, amount, currency} = req.body;
   try {
     await db(`INSERT INTO transactions (date, category, merchant, description, amount, currency) 
@@ -37,13 +38,13 @@ router.post("/", async function(req, res, next) {
 });
 
 /* GET All trasnsaction list. */
-router.get('/', function(req, res) {
+router.get('/', userShouldBeLoggedIn, function(req, res) {
   getAllTransaction(req, res);
 });
 
 
 /* GET transactions by id */
-router.get('/:id', (req, res) => {
+router.get('/:id', userShouldBeLoggedIn, (req, res) => {
   const key = "id";
   const value = req.params.id;
   selectTransactionByKey(req, res, key, value);
@@ -56,7 +57,7 @@ router.get('/:id', (req, res) => {
 //   selectTransactionByKey(req, res, key, value);
 // });
 /* UPDATED THE DATABASE, SO THIS FUNCTION ALSO NEEDED AN UPDATE */
-router.get('/category/:name', async (req, res) => {
+router.get('/category/:name', userShouldBeLoggedIn, async (req, res) => {
   const {name} = req.params;
 
   try {
@@ -73,7 +74,7 @@ router.get('/category/:name', async (req, res) => {
 });
 
 /* GET transactions by user firstname */
-router.get('/user/:firstname', async (req, res) => {
+router.get('/user/:firstname', userShouldBeLoggedIn, async (req, res) => {
   const {firstname} = req.params;
 
   try {
@@ -90,7 +91,7 @@ router.get('/user/:firstname', async (req, res) => {
 });
 
 /* GET transactions by trip */
-router.get('/trip/:id', async (req, res) => {
+router.get('/trip/:id', userShouldBeLoggedIn, async (req, res) => {
   const {id} = req.params;
 
   try {
@@ -111,7 +112,7 @@ router.get('/trip/:id', async (req, res) => {
 });
 
 /* GET transactions by currency */
-router.get('/currency/:value', (req, res) => {
+router.get('/currency/:value', userShouldBeLoggedIn, (req, res) => {
   const key = "currency";
   const value = req.params.value;
   selectTransactionByKey(req, res, key, value);
@@ -122,7 +123,7 @@ router.get('/currency/:value', (req, res) => {
 // UPDATE transactions SET amount = 240, currency = "USD" WHERE id = 3;
 /* PUT - Update category OR amount OR currency */
 
-router.put('/:id', async function(req, res) {
+router.put('/:id', userShouldBeLoggedIn, async function(req, res) {
   const id = req.params.id;
   const { category, amount, currency } = req.body;
   try {
@@ -146,7 +147,7 @@ router.put('/:id', async function(req, res) {
   }
 });
 
-router.delete('/:id', async function(req, res) {
+router.delete('/:id', userShouldBeLoggedIn, async function(req, res) {
   const value = req.params.id;
   try {
     await db(`DELETE FROM transactions WHERE id=${value};`);

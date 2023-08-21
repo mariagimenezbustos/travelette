@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../model/helper");
+var userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
 
 /* GET categories listing. */
-router.get('/', async function(req, res, next) {
+router.get('/', userShouldBeLoggedIn, async function(req, res, next) {
   try {
     const results = await db("SELECT * FROM categories ORDER BY id ASC;");
     res.send(results.data);
@@ -13,7 +14,7 @@ router.get('/', async function(req, res, next) {
 });
 
 /* GET categories by category name. */
-router.get('/:name', async function(req, res) {
+router.get('/:name', userShouldBeLoggedIn, async function(req, res) {
   const {name} = req.params;
   try {
     const results = await db(`SELECT * FROM categories WHERE name = "${name}";`);

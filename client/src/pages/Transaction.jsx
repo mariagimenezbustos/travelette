@@ -10,7 +10,10 @@ export default function Transaction() {
 	}, [id]);
 
 	const getTransaction = () => {
-		fetch(`/api/transactions/${id}`)
+		fetch(`/api/transactions/${id}`, 
+		{headers: {
+		authorization: "Bearer " + localStorage.getItem("token"),
+		  }})
 			.then(response => response.json())
 			.then(transaction => {
 				setTransaction(...transaction);

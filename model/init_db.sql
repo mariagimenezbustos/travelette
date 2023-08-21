@@ -48,12 +48,12 @@ ALTER TABLE
 ALTER TABLE
     transactions ADD CONSTRAINT `transactions_category_id_foreign` FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`);
 
-INSERT INTO users (firstname, lastname)
+INSERT INTO users (firstname, lastname, username, password)
 VALUES
-    ("Alexandra", "Green"),
-    ("Rafael", "Marino"),
-    ("Sofia", "Rabl"),
-    ("Chris", "Velotti");
+    ("Alexandra", "Green", "alexandragreen", "alexandragreen"),
+    ("Rafael", "Marino", "rafaelmarino", "rafaelmarino"),
+    ("Sofia", "Rabl", "sofiarabl", "sofiarabl"),
+    ("Chris", "Velotti", "chrisvelotti", "chrisvelotti");
 
 INSERT INTO categories (name)
 VALUES

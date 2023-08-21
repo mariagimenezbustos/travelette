@@ -10,7 +10,10 @@ export default function Trips() {
 	}, []);
 
 	const getTrips = () => {
-		fetch("/api/trips")
+		fetch("/api/trips", 
+		{headers: {
+		authorization: "Bearer " + localStorage.getItem("token"),
+		  }})
 			.then(response => response.json())
 			.then(trips => {
 				console.log(trips);

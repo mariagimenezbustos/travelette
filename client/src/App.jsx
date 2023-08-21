@@ -10,11 +10,13 @@ import Trips from './pages/Trips';
 import Friends from './pages/Friends';
 import Manage from './pages/Manage';
 import Inbox from './pages/Inbox';
-import Trip from './pages/Trip'
+import Trip from './pages/Trip';
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+
 
 function App() {
   return (
-    <>
       <Routes>
         <Route path="/" element={<Frame/>} >
           <Route path="/" element={<Home />} />
@@ -26,9 +28,10 @@ function App() {
           <Route path="/inbox" element={<Inbox/>} />
           <Route path="/manage" element={<Manage/>} />
           <Route path="/transactions/trip/:id" element={<Trip/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register />}/>
         </Route>
       </Routes>
-    </>
   )
 }
 

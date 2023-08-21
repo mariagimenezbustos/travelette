@@ -20,7 +20,10 @@ export default function Transactions() {
 	}, []);
 
 	const getTransactions = () => {
-		fetch("/api/transactions")
+		fetch("/api/transactions", 
+			{headers: {
+			authorization: "Bearer " + localStorage.getItem("token"),
+		  	}})
 			.then(response => response.json())
 			.then(transactions => {
 				console.log(transactions);
