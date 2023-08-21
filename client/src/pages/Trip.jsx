@@ -43,6 +43,7 @@ export default function Trip() {
 					displayData[transaction.currency].push(transaction);
 					total[transaction.currency] += transaction.amount;
 
+					// the following makes participants only people who has collaborated in the first payment list
 					participants[transaction.user_id] = {
 						firstname: transaction.firstname,
 						lastname: transaction.lastname
@@ -66,7 +67,7 @@ export default function Trip() {
 					const userId = transaction.user_id;
 					const currency = transaction.currency;
 					netAmounts[currency][userId] -= transaction.amount;
-				})
+				});
 
 				setDisplay({
 					currency: id,
