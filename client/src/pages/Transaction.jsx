@@ -22,6 +22,8 @@ export default function Transaction() {
 				console.log(error);
 		});
 	}
+
+	console.log(transaction);
 	return (
 	<section>
 		<header>

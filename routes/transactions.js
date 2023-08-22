@@ -45,9 +45,12 @@ router.get('/', userShouldBeLoggedIn, function(req, res) {
 
 /* GET transactions by id */
 router.get('/:id', userShouldBeLoggedIn, (req, res) => {
-  const key = "id";
-  const value = req.params.id;
-  selectTransactionByKey(req, res, key, value);
+  const {id} = req.params;
+  db(`SELECT * FROM transactions JOIN categories ON transactions.category_id = categories.id WHERE transactions.id = ${id};`)
+  .then(results => {
+    res.send(results.data);
+  })
+  .catch(err => res.status(500).send(err));
 });
 
 /* GET transactions by category name */
