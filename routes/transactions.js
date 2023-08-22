@@ -16,7 +16,7 @@ const getAllTransaction = (req, res) => {
 
 //returns a transaction based on the key you are serching for, eg /transactions/categories
 const selectTransactionByKey = (req, res, key, value) => {
-  db(`SELECT * FROM transactions WHERE ${key} = "${value}";`)
+  db(`SELECT * FROM transactions JOIN categories ON transactions.category_id = categories.id WHERE ${key} = "${value}";`)
     .then(results => {
       res.send(results.data);
     })
@@ -79,7 +79,7 @@ router.get('/user/:username', userShouldBeLoggedIn, async (req, res) => {
 
   try {
     const userResults = await db(`SELECT * FROM users WHERE username = "${username}";`);
-    const transactionResults = await db(`SELECT * FROM transactions JOIN users ON transactions.user_id = users.id WHERE users.username = "${username}";`);
+    const transactionResults = await db(`SELECT * FROM transactions JOIN users ON transactions.user_id = users.id JOIN categories ON transactions.category_id = categories.id WHERE users.username = "${username}";`);
 
     const user = userResults.data[0];
     const transaction = transactionResults.data;
