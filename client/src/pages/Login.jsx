@@ -94,11 +94,11 @@ function Login() {
                 </button>
             </div>
 
-            {data && (
+            {/* {data && (
                 <div className="">
                     <div className="alert">{data}</div>
                 </div>
-            )}
+            )} */}
         </section>
     )
 }
