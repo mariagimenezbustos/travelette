@@ -17,7 +17,7 @@ router.get('/', userShouldBeLoggedIn, async function(req, res, next) {
 router.get('/:trip_id', userShouldBeLoggedIn, async function(req, res) {
     const {trip_id} = req.params;
     try {
-      const results = await db(`SELECT * FROM trips WHERE id = ${trip_id};`);
+      const results = await db(`SELECT * FROM trips JOIN trip_user_relationship ON trips.id = trip_user_relationship.trip_id JOIN users ON trip_user_relationship.user_id = users.id WHERE trips.id = ${trip_id};`);
       res.send(results.data);
     } catch (error) {
       res.status(500).send({ err: err.message });

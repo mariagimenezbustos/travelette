@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -93,7 +93,7 @@ export default function Register() {
 
           (<div className="">
             <div className="alert">{data}</div>
-            <Link to="/login">Log in</Link>
+            <Link to="/"><button>Log in</button></Link>
           </div>
         )}
     </section>

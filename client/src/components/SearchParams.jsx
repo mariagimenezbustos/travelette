@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const CATEGORIES = ["food", "transport", "acomodation", "groceries", "shoping", "gifts", "personal care", "activities", "other"];
 
 const SearchParams = ({setResults}) => {
-	const [category, setCategorie] = useState("");
+	const [category, setCategory] = useState("");
 
 	useEffect(() => {
 		getTransactions();
@@ -32,7 +32,7 @@ const SearchParams = ({setResults}) => {
 						id="category"
 						value={category}
 						onChange={(e) => {
-							setCategorie(e.target.value);
+							setCategory(e.target.value);
 						}}
 					>
 						<option value="">--Please select a category--</option>

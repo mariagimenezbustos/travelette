@@ -1,5 +1,3 @@
-import Login from "./Login";
-
 export default function Home() {
   return (
 		<section className="home wrapper">
@@ -7,7 +5,7 @@ export default function Home() {
 			<section>
 				<div className="last-trip">
 					<h3>Current trip total:</h3>
-					<h4>1,300.000</h4>
+					<h4>1,300.00</h4>
 				</div>
 			</section>
 

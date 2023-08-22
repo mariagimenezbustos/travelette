@@ -1,14 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Login() {
     const [credentials, setCredentials] = useState({
         username: "",
         password: "",
     });
-
     const [data, setData] = useState(null);
-
     const { username, password } = credentials;
 
     const login = async () => {
@@ -20,7 +19,8 @@ function Login() {
     
         //store it locally
         localStorage.setItem("token", data.token);
-        console.log(data.message, data.token);
+        localStorage.setItem("username", username);
+        console.log(data.message, data.token, username);
         setData(data.message);
         } catch (error) {
         console.log(error);
@@ -35,6 +35,7 @@ function Login() {
 
     const logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
         console.log("You're logged out");
     };
 
@@ -64,6 +65,7 @@ function Login() {
                 name="username"
                 type="text"
                 className=""
+                placeholder="username"
                 />
                 <input
                 value={password}
@@ -71,14 +73,19 @@ function Login() {
                 name="password"
                 type="password"
                 className=""
+                placeholder="password"
                 />
                 <div className="">
                 <button className="" onClick={login}>
                     Log in
                 </button>
-                <button className="" onClick={logout}>
-                    Log out
-                </button>
+                {data ? (
+                    <button className="" onClick={logout}>
+                        Log out
+                    </button>
+                ) : (
+                    <Link to="/register"><button>Register</button></Link>
+                )}
                 </div>
             </div>
             <div className="">
@@ -94,6 +101,6 @@ function Login() {
             )}
         </section>
     )
-};
+}
 
 export default Login;

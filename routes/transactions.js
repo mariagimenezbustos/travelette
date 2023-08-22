@@ -74,12 +74,12 @@ router.get('/category/:name', userShouldBeLoggedIn, async (req, res) => {
 });
 
 /* GET transactions by user firstname */
-router.get('/user/:firstname', userShouldBeLoggedIn, async (req, res) => {
-  const {firstname} = req.params;
+router.get('/user/:username', userShouldBeLoggedIn, async (req, res) => {
+  const {username} = req.params;
 
   try {
-    const userResults = await db(`SELECT * FROM users WHERE firstname = "${firstname}";`);
-    const transactionResults = await db(`SELECT * FROM transactions JOIN users ON transactions.user_id = users.id WHERE users.firstname = "${firstname}"`);
+    const userResults = await db(`SELECT * FROM users WHERE username = "${username}";`);
+    const transactionResults = await db(`SELECT * FROM transactions JOIN users ON transactions.user_id = users.id WHERE users.username = "${username}";`);
 
     const user = userResults.data[0];
     const transaction = transactionResults.data;
@@ -95,17 +95,17 @@ router.get('/trip/:id', userShouldBeLoggedIn, async (req, res) => {
   const {id} = req.params;
 
   try {
-    const tripResults = await db(`SELECT * FROM trips WHERE id = ${id};`);
-    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id JOIN users ON transactions.user_id = users.id JOIN categories ON transactions.category_id = categories.id WHERE trips.id = ${id} ORDER BY date ASC;`);
+    const tripResults = await db(`SELECT * FROM users JOIN trip_user_relationship ON users.id = trip_user_relationship.user_id JOIN trips ON trips.id = trip_user_relationship.trip_id WHERE trips.id = ${id};`);
+    const transactionResults = await db(`SELECT * FROM transactions JOIN trips ON transactions.trip_id = trips.id JOIN users ON transactions.user_id = users.id JOIN categories ON transactions.category_id = categories.id WHERE users.id = transactions.user_id AND trips.id = ${id} ORDER BY date ASC;`);
     // add also userResults and categoryResults
 
-    const trip = tripResults.data[0];
-    // console.log("trip destination:", trip.destination);
+    const trip = tripResults.data;
+    console.log("trip destination:", trip.destination);
     const transaction = transactionResults.data;
     console.log("transaction[0].destination:", transaction[0].destination);
 
 
-    res.send(transaction);
+    res.send({ trip, transaction });
   } catch (error) {
     res.status(500).send({ err: err.message });
   }

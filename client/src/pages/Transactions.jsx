@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {Link, Outlet} from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SearchParams from "../components/SearchParams";
 
@@ -13,25 +13,29 @@ const queryClient = new QueryClient({
 });
 
 export default function Transactions() {
-	const [transactions, setTransactions] = useState([]);
+	const [transactions, setTransactions] = useState({
+		user: {},
+		transaction: []
+	});
+	const username = localStorage.getItem("username");
 
 	useEffect(() => {
 		getTransactions()
 	}, []);
 
 	const getTransactions = () => {
-		fetch("/api/transactions", 
-			{headers: {
-			authorization: "Bearer " + localStorage.getItem("token"),
-		  	}})
-			.then(response => response.json())
-			.then(transactions => {
-				console.log(transactions);
-				setTransactions(transactions);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		fetch(`/api/transactions/user/${username}`, 
+		{headers: {
+		authorization: "Bearer " + localStorage.getItem("token"),
+		}})
+		.then(response => response.json())
+		.then(transaction => {
+			console.log(transaction);
+			setTransactions(transaction);
+		})
+		.catch(error => {
+			console.log(error);
+		});
 	};
 
 	return (
@@ -57,7 +61,7 @@ export default function Transactions() {
 					<div><a href="#"></a>CURRENCY</div>
 				</div>
 				<ul className="transactionContent">
-					{transactions.map(entry => (
+					{transactions.transaction.map(entry => (
 						<li key ={entry.id}>
 							<Link className="transactionRow" to={`/transactions/${entry.id}`}>
 								<div>{entry.date.split("T")[0]} </div>

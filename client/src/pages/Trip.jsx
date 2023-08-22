@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
 export default function Trip() {
-	const [trip, setTrip] = useState([]);
+	const [trip, setTrip] = useState({
+		trip: [],
+		transaction: []
+	});
 	const { id } = useParams();
 	const [display, setDisplay] = useState({
 		currency: "",
@@ -36,16 +39,23 @@ export default function Trip() {
 		authorization: "Bearer " + localStorage.getItem("token"),
 		  }})
 			.then(response => response.json())
-			.then(transactionsByCurrency => {
+			.then(responseData => {
+				const transactions = responseData.transaction;
+				console.log("Transactions:", transactions);
+
 				const displayData = {};
 				const total = {};
 				const participants = {};
 
-				transactionsByCurrency.forEach(transaction => {
+				console.log("Response data:", transactions);
+				console.log("Response data type:", typeof transactions);
+
+				transactions.forEach(transaction => {
 					if(!displayData[transaction.currency]) {
 						displayData[transaction.currency] = [];
 						total[transaction.currency] = 0;
 					}
+
 					displayData[transaction.currency].push(transaction);
 					total[transaction.currency] += transaction.amount;
 
@@ -69,7 +79,7 @@ export default function Trip() {
 					}
 				}
 
-				transactionsByCurrency.forEach(transaction => {
+				transactions.forEach(transaction => {
 					const userId = transaction.user_id;
 					const currency = transaction.currency;
 					netAmounts[currency][userId] -= transaction.amount;
@@ -103,7 +113,7 @@ export default function Trip() {
 				<div><a href="#"></a>PAYER</div>
 			</div>
 			<ul className="tripContent">
-					{trip.map(entry => (
+					{(trip.transaction).map(entry => (
 						<li key={entry.id}>
 							<Link className="tripRow" to={`/transactions/${entry.id}`}>
 								<div>{entry.date.split("T")[0]}</div>
